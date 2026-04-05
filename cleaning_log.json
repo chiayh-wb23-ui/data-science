@@ -1,0 +1,136 @@
+[
+  {
+    "step": "load",
+    "description": "Loaded 7043x21 from CSV"
+  },
+  {
+    "step": "audit",
+    "description": "dupes: 0 rows, 0 IDs"
+  },
+  {
+    "step": "audit",
+    "description": "TotalCharges: 11 non-numeric"
+  },
+  {
+    "step": "audit",
+    "description": "churn rate=26.5%"
+  },
+  {
+    "step": "audit",
+    "description": "tenure: IQR=46.0, outliers=0",
+    "details": {
+      "Q1": 9.0,
+      "Q3": 55.0,
+      "outliers": 0
+    }
+  },
+  {
+    "step": "audit",
+    "description": "MonthlyCharges: IQR=54.3, outliers=0",
+    "details": {
+      "Q1": 35.5,
+      "Q3": 89.85,
+      "outliers": 0
+    }
+  },
+  {
+    "step": "audit",
+    "description": "TotalCharges: IQR=3393.3, outliers=0",
+    "details": {
+      "Q1": 401.45,
+      "Q3": 3794.7375,
+      "outliers": 0
+    }
+  },
+  {
+    "step": "clean",
+    "description": "Dropped 'customerID'"
+  },
+  {
+    "step": "clean",
+    "description": "TotalCharges: removed 11 bad rows"
+  },
+  {
+    "step": "clean",
+    "description": "SeniorCitizen mapped 0/1 -> No/Yes"
+  },
+  {
+    "step": "engineer",
+    "description": "AvgMonthlySpend = TotalCharges/(tenure+1)"
+  },
+  {
+    "step": "engineer",
+    "description": "ChargeRatio = Monthly/(Total+1)"
+  },
+  {
+    "step": "engineer",
+    "description": "ServiceCount from 9 cols"
+  },
+  {
+    "step": "engineer",
+    "description": "HasProtectionBundle"
+  },
+  {
+    "step": "engineer",
+    "description": "HighRiskContract"
+  },
+  {
+    "step": "engineer",
+    "description": "HasStreaming"
+  },
+  {
+    "step": "encode",
+    "description": "Target encoded: {'No': np.int64(0), 'Yes': np.int64(1)}"
+  },
+  {
+    "step": "encode",
+    "description": "OHE 16 cats -> 36 features"
+  },
+  {
+    "step": "split",
+    "description": "80/20 split: train=5625 test=1407"
+  },
+  {
+    "step": "scale",
+    "description": "StandardScaler fitted on 6 numeric cols (applied inside pipeline, not pre-applied)"
+  },
+  {
+    "step": "rfe",
+    "description": "RFECV: 35/36 kept"
+  },
+  {
+    "step": "rfe_removed",
+    "description": "Removed: ['HasProtectionBundle']"
+  },
+  {
+    "step": "kfold_threshold",
+    "description": "K-Fold threshold search (5 folds)",
+    "details": {
+      "Logistic Regression": {
+        "avg_threshold": 0.5225090830927117,
+        "avg_f1": 0.6439616195059753,
+        "std_f1": 0.008837035200627662
+      },
+      "KNN": {
+        "avg_threshold": 0.5916666666666667,
+        "avg_f1": 0.6217093730792062,
+        "std_f1": 0.011389850968225802
+      },
+      "Decision Tree": {
+        "avg_threshold": 0.5802708918159392,
+        "avg_f1": 0.6245466294817652,
+        "std_f1": 0.008366725764203588
+      },
+      "Random Forest": {
+        "avg_threshold": 0.4984099977864497,
+        "avg_f1": 0.6443329440115202,
+        "std_f1": 0.006310489998784884
+      },
+      "Ensemble Voting": {
+        "avg_threshold": 0.5636944672079272,
+        "avg_f1": 0.6498742715458815,
+        "std_f1": 0.009150695573098864
+      }
+    }
+  }
+]
